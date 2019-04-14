@@ -75,7 +75,7 @@ namespace Models.Place.Repository
             throw new NotImplementedException();
         }
 
-        public Place Patch(PlaceCreateInfo patchInfo)
+        public Place Patch(PlacePatchInfo patchInfo)
         {
             throw new NotImplementedException();
         }

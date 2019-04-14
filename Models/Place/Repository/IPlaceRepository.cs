@@ -33,7 +33,7 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="patchInfo">Информация для изменения</param>
         /// <returns>Передержка</returns>
-        Place Patch(PlaceCreateInfo patchInfo);
+        Place Patch(PlacePatchInfo patchInfo);
 
         /// <summary>
         /// Удалить передержку

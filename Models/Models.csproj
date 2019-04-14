@@ -36,6 +36,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Booking\Booking.cs" />
+    <Compile Include="Booking\BookingCreateInfo.cs" />
+    <Compile Include="Booking\BookingFilterInfo.cs" />
+    <Compile Include="Booking\BookingNotFoundException.cs" />
+    <Compile Include="Booking\BookingPatchInfo.cs" />
+    <Compile Include="Booking\Repository\IBookingRepository.cs" />
+    <Compile Include="Booking\Repository\MemoryBookingRepository.cs" />
     <Compile Include="Place\Place.cs" />
     <Compile Include="Place\PlaceCreateInfo.cs" />
     <Compile Include="Place\PlaceFilterInfo.cs" />
@@ -51,8 +58,6 @@
     <Compile Include="User\User.cs" />
     <Compile Include="User\UserCreateInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Booking\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
