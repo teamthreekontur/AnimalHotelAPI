@@ -36,6 +36,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Place\Place.cs" />
+    <Compile Include="Place\PlaceCreateInfo.cs" />
+    <Compile Include="Place\PlaceFilterInfo.cs" />
+    <Compile Include="Place\PlaceNotFoundException.cs" />
+    <Compile Include="Place\PlacePatchInfo.cs" />
+    <Compile Include="Place\Repository\IPlaceRepository.cs" />
+    <Compile Include="Place\Repository\MemoryPlaceRepository.cs" />
     <Compile Include="User\Repository\IUserRepository.cs" />
     <Compile Include="User\Repository\MemoryUserRepository.cs" />
     <Compile Include="User\UserDuplicationException.cs" />
@@ -46,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Booking\" />
-    <Folder Include="Place\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
