@@ -21,7 +21,18 @@ namespace Models.User.Repository
         /// <returns>Пользователь</returns>
         User Get(Guid userId);
 
+        /// <summary>
+        /// Получить пользователя по логину
+        /// </summary>
+        /// <param name="login">Логин пользователя</param>
+        /// <returns>Пользователь</returns>
+        User Get(string login);
 
+        /// <summary>
+        /// Изменить информацию о пользователе
+        /// </summary>
+        /// <param name="patchInfo">Информация для изменения</param>
+        /// <returns>Пользователь</returns>
         User Patch(UserPatchInfo patchInfo);
     }
 }

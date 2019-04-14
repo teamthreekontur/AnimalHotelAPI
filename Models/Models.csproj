@@ -37,6 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="User\Repository\IUserRepository.cs" />
+    <Compile Include="User\Repository\MemoryUserRepository.cs" />
+    <Compile Include="User\UserDuplicationException.cs" />
+    <Compile Include="User\UserNotFoundException.cs" />
     <Compile Include="User\UserPatchInfo.cs" />
     <Compile Include="User\User.cs" />
     <Compile Include="User\UserCreateInfo.cs" />
