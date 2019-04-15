@@ -75,9 +75,50 @@ namespace Models.Place.Repository
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Изменить заметку
+        /// </summary>
+        /// <param name="patchInfo">Описание изменений заметки</param>
+        /// <param name="cancelltionToken">Токен отмены операции</param>
+        /// <returns>Задача, представляющая асинхронный запрос на изменение заметки. Результат выполнения - актуальное состояние заметки</returns>
         public Place Patch(PlacePatchInfo patchInfo)
         {
-            throw new NotImplementedException();
+            if (patchInfo == null)
+            {
+                throw new ArgumentNullException(nameof(patchInfo));
+            }
+
+            if (!primaryKeyIndex.TryGetValue(patchInfo.PlaceId, out var place))
+            {
+                throw new PlaceNotFoundException(patchInfo.PlaceId);
+            }
+
+            var updated = false;
+
+            if (patchInfo.Name != null)
+            {
+                place.Name = patchInfo.Name;
+                updated = true;
+            }
+
+            if (patchInfo.Address != null)
+            {
+                place.Address = patchInfo.Address;
+                updated = true;
+            }
+
+            //if (patchInfo.Favorite != null)
+            //{
+            //    note.Favorite = patchInfo.Favorite.Value;
+            //    updated = true;
+            //}
+
+            if (updated)
+            {
+                //place.LastUpdatedAt = DateTime.UtcNow;
+            }
+
+            return place;
         }
     }
 }

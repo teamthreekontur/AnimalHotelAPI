@@ -12,10 +12,12 @@ namespace Models.Place
         /// </summary>
         /// <param name="name">Название передержки</param>
         /// <param name="address">Адрес передержки</param>
-        public PlaceCreateInfo(string name, string address)
+        /// <param name="nameOwner">Имя владельца передержки</param>
+        public PlaceCreateInfo(string name, string address, string nameOwner)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Address = address ?? throw new ArgumentNullException(nameof(address));
+            NameOwner = nameOwner ?? throw new ArgumentNullException(nameof(nameOwner));
         }
 
         /// <summary>
@@ -29,8 +31,8 @@ namespace Models.Place
         public string Address { get; }
 
         /// <summary>
-        /// Id владельца передержки
+        /// Имя владельца передержки
         /// </summary>
-        public Guid IdOwner { get; }
+        public string NameOwner { get; }
     }
 }
