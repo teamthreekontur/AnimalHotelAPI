@@ -35,7 +35,8 @@ namespace Models.Booking.Repository
             var booking = new Booking
             {
                 Id = id,
-                Date = createInfo.Date
+                DateFrom = createInfo.DateFrom,
+                DateTo = createInfo.DateTo
             };
 
             primaryKeyIndex.Add(id, booking);
@@ -48,7 +49,7 @@ namespace Models.Booking.Repository
         /// </summary>
         /// <param name="bookingId">Идентификатор брони</param>
         /// <returns>Бронь</returns>
-        public Booking Delete(Guid bookingId)
+        public Booking Remove(Guid bookingId)
         {
             var booking = Get(bookingId);
             primaryKeyIndex.Remove(bookingId);
@@ -76,9 +77,34 @@ namespace Models.Booking.Repository
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Изменить бронь
+        /// </summary>
+        /// <param name="patchInfo">Описание изменений брони</param>
+        /// <returns>Измененная бронь</returns>
         public Booking Patch(BookingPatchInfo patchInfo)
         {
-            throw new NotImplementedException();
+            if (patchInfo == null)
+            {
+                throw new ArgumentNullException(nameof(patchInfo));
+            }
+
+            if (!primaryKeyIndex.TryGetValue(patchInfo.BookingId, out var booking))
+            {
+                throw new BookingNotFoundException(patchInfo.BookingId);
+            }
+
+            if (patchInfo.DateFrom != null)
+            {
+                booking.DateFrom = patchInfo.DateFrom;
+            }
+
+            if (patchInfo.DateTo != null)
+            {
+                booking.DateTo = patchInfo.DateTo;
+            }
+
+            return booking;
         }
     }
 }

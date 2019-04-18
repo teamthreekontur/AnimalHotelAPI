@@ -14,15 +14,22 @@ namespace Models.Booking
         /// <summary>
         /// Инициализирует новый экземпляр описания для создания брони
         /// </summary>
-        /// <param name="date">Период брони</param>
-        public BookingCreateInfo(DateTime date)
+        /// <param name="dateFrom">Начало брони</param>
+        /// <param name="dateTo">Конец брони</param>
+        public BookingCreateInfo(DateTime dateFrom, DateTime dateTo)
         {
-            //Date = date ?? throw new ArgumentNullException(nameof(date));
+            DateFrom = dateFrom;
+            DateTo = dateTo;
         }
 
         /// <summary>
-        /// Период брони
+        /// Начало брони
         /// </summary>
-        public DateTime Date { get; }
+        public DateTime DateFrom { get; }
+
+        /// <summary>
+        /// Конец брони
+        /// </summary>
+        public DateTime DateTo { get; }
     }
 }

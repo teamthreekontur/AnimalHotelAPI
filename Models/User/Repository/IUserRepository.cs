@@ -34,5 +34,12 @@ namespace Models.User.Repository
         /// <param name="patchInfo">Информация для изменения</param>
         /// <returns>Пользователь</returns>
         User Patch(UserPatchInfo patchInfo);
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <returns>Пользователь</returns>
+        User Remove(Guid userId);
     }
 }

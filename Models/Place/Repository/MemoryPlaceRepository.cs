@@ -47,7 +47,7 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="placeId">Идентификатор передержки</param>
         /// <returns>Передержка</returns>
-        public Place Delete(Guid placeId)
+        public Place Remove(Guid placeId)
         {
             var place = Get(placeId);
             primaryKeyIndex.Remove(placeId);
@@ -70,14 +70,44 @@ namespace Models.Place.Repository
             return place;
         }
 
+        /// <summary>
+        /// Получить список передержек по значениям полей фильтра
+        /// </summary>
+        /// <param name="placeFilter">Поля по которым нужно искать передержки</param>
+        /// <returns>Список передержек</returns>
         public Place[] Get(PlaceFilterInfo placeFilter)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Изменить передержку
+        /// </summary>
+        /// <param name="patchInfo">Описание изменений передержки</param>
+        /// <returns>Измененная передержка</returns>
         public Place Patch(PlacePatchInfo patchInfo)
         {
-            throw new NotImplementedException();
+            if (patchInfo == null)
+            {
+                throw new ArgumentNullException(nameof(patchInfo));
+            }
+
+            if (!primaryKeyIndex.TryGetValue(patchInfo.PlaceId, out var place))
+            {
+                throw new PlaceNotFoundException(patchInfo.PlaceId);
+            }
+
+            if (patchInfo.Name != null)
+            {
+                place.Name = patchInfo.Name;
+            }
+
+            if (patchInfo.Address != null)
+            {
+                place.Address = patchInfo.Address;
+            }
+
+            return place;
         }
     }
 }
