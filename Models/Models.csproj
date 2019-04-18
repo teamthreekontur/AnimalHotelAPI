@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{93FBC7FB-1CDF-4B28-B7E7-8C24ED53CE8D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Models</RootNamespace>
+    <AssemblyName>Models</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Booking\Booking.cs" />
+    <Compile Include="Booking\BookingCreateInfo.cs" />
+    <Compile Include="Booking\BookingFilterInfo.cs" />
+    <Compile Include="Booking\BookingNotFoundException.cs" />
+    <Compile Include="Booking\BookingPatchInfo.cs" />
+    <Compile Include="Booking\Repository\IBookingRepository.cs" />
+    <Compile Include="Booking\Repository\MemoryBookingRepository.cs" />
+    <Compile Include="Place\Place.cs" />
+    <Compile Include="Place\PlaceCreateInfo.cs" />
+    <Compile Include="Place\PlaceFilterInfo.cs" />
+    <Compile Include="Place\PlaceNotFoundException.cs" />
+    <Compile Include="Place\PlacePatchInfo.cs" />
+    <Compile Include="Place\Repository\IPlaceRepository.cs" />
+    <Compile Include="Place\Repository\MemoryPlaceRepository.cs" />
+    <Compile Include="User\Repository\IUserRepository.cs" />
+    <Compile Include="User\Repository\MemoryUserRepository.cs" />
+    <Compile Include="User\UserDuplicationException.cs" />
+    <Compile Include="User\UserNotFoundException.cs" />
+    <Compile Include="User\UserPatchInfo.cs" />
+    <Compile Include="User\User.cs" />
+    <Compile Include="User\UserCreateInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
