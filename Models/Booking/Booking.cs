@@ -6,9 +6,24 @@ using System.Threading.Tasks;
 
 namespace Models.Booking
 {
+    /// <summary>
+    /// Бронь
+    /// </summary>
     class Booking
     {
+        /// <summary>
+        /// Идентификатор брони
+        /// </summary>
         public Guid Id { get; set; }
-        public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Начало брони
+        /// </summary>
+        public DateTime DateFrom { get; set; }
+
+        /// <summary>
+        /// Конец брони
+        /// </summary>
+        public DateTime DateTo { get; set; }
     }
 }

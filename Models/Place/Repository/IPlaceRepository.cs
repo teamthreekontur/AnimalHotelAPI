@@ -40,6 +40,6 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="placeId">Идентификатор передержки</param>
         /// <returns>Передержка</returns>
-        Place Delete(Guid placeId);
+        Place Remove(Guid placeId);
     }
 }

@@ -47,7 +47,7 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="placeId">Идентификатор передержки</param>
         /// <returns>Передержка</returns>
-        public Place Delete(Guid placeId)
+        public Place Remove(Guid placeId)
         {
             var place = Get(placeId);
             primaryKeyIndex.Remove(placeId);
@@ -70,17 +70,21 @@ namespace Models.Place.Repository
             return place;
         }
 
+        /// <summary>
+        /// Получить список передержек по значениям полей фильтра
+        /// </summary>
+        /// <param name="placeFilter">Поля по которым нужно искать передержки</param>
+        /// <returns>Список передержек</returns>
         public Place[] Get(PlaceFilterInfo placeFilter)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Изменить заметку
+        /// Изменить передержку
         /// </summary>
-        /// <param name="patchInfo">Описание изменений заметки</param>
-        /// <param name="cancelltionToken">Токен отмены операции</param>
-        /// <returns>Задача, представляющая асинхронный запрос на изменение заметки. Результат выполнения - актуальное состояние заметки</returns>
+        /// <param name="patchInfo">Описание изменений передержки</param>
+        /// <returns>Измененная передержка</returns>
         public Place Patch(PlacePatchInfo patchInfo)
         {
             if (patchInfo == null)
@@ -93,29 +97,14 @@ namespace Models.Place.Repository
                 throw new PlaceNotFoundException(patchInfo.PlaceId);
             }
 
-            var updated = false;
-
             if (patchInfo.Name != null)
             {
                 place.Name = patchInfo.Name;
-                updated = true;
             }
 
             if (patchInfo.Address != null)
             {
                 place.Address = patchInfo.Address;
-                updated = true;
-            }
-
-            //if (patchInfo.Favorite != null)
-            //{
-            //    note.Favorite = patchInfo.Favorite.Value;
-            //    updated = true;
-            //}
-
-            if (updated)
-            {
-                //place.LastUpdatedAt = DateTime.UtcNow;
             }
 
             return place;

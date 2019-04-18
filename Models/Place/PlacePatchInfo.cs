@@ -13,13 +13,11 @@ namespace Models.Place
         /// <param name="placeId">Идентификатор передержки, которую нужно изменить</param>
         /// <param name="name">Новый заголовок передержки</param>
         /// <param name="address">Новый адрес передержки</param>
-        /// <param name="ownerName">Новое имя владельца передержки</param>
-        public PlacePatchInfo(Guid placeId, string name = null, string address = null, string nameOwner = null)
+        public PlacePatchInfo(Guid placeId, string name = null, string address = null)
         {
             PlaceId = placeId;
             Name = name;
             Address = address;
-            NameOwner = nameOwner;
         }
 
         /// <summary>
@@ -36,10 +34,5 @@ namespace Models.Place
         /// Новый адрес передержки
         /// </summary>
         public string Address { get; set; }
-
-        /// <summary>
-        /// Новое имя владельца передержки
-        /// </summary>
-        public string NameOwner { get; set; }
     }
 }
