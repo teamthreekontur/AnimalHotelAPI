@@ -40,6 +40,6 @@ namespace Models.Booking.Repository
         /// </summary>
         /// <param name="bookingId">Идентификатор брони</param>
         /// <returns>Бронь</returns>
-        Booking Delete(Guid bookingId);
+        Booking Remove(Guid bookingId);
     }
 }

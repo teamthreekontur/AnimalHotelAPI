@@ -5,8 +5,6 @@ namespace Models.User.Repository
 {
     /// <summary>
     /// Хранилище пользователей в памяти
-    /// 
-    /// Потоконебезопасно
     /// </summary>
     class MemoryUserRepository : IUserRepository
     {
@@ -90,10 +88,48 @@ namespace Models.User.Repository
             return user;
         }
 
-
+        /// <summary>
+        /// Изменить пользователя
+        /// </summary>
+        /// <param name="patchInfo">Описание изменений пользователя</param>
+        /// <returns>Измененный пользователь</returns>
         public User Patch(UserPatchInfo patchInfo)
         {
-            throw new NotImplementedException();
+            if (patchInfo == null)
+            {
+                throw new ArgumentNullException(nameof(patchInfo));
+            }
+
+            if (!this.primaryKeyIndex.TryGetValue(patchInfo.UserId, out var user))
+            {
+                throw new UserNotFoundException(patchInfo.UserId);
+            }
+
+            if (patchInfo.Login != null)
+            {
+                user.Login = patchInfo.Login;
+            }
+
+            if (patchInfo.Password != null)
+            {
+                user.Password = patchInfo.Password;
+            }
+
+            if (patchInfo.Role != null)
+            {
+                user.Role = patchInfo.Role;
+            }
+
+            return user;
+        }
+
+        public User Remove(Guid userId)
+        {
+            var user = Get(userId);
+            primaryKeyIndex.Remove(userId);
+            loginIndex.Remove(user.Login);
+
+            return user;
         }
     }
 }

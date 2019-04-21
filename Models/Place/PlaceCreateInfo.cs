@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.User;
+using System;
 
 namespace Models.Place
 {
@@ -12,10 +13,12 @@ namespace Models.Place
         /// </summary>
         /// <param name="name">Название передержки</param>
         /// <param name="address">Адрес передержки</param>
-        public PlaceCreateInfo(string name, string address)
+        /// <param name="idOwner">Идентификатор владельца передержки</param>
+        public PlaceCreateInfo(string name, string address, Guid idOwner)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Address = address ?? throw new ArgumentNullException(nameof(address));
+            IdOwner = idOwner;
         }
 
         /// <summary>
@@ -29,7 +32,7 @@ namespace Models.Place
         public string Address { get; }
 
         /// <summary>
-        /// Id владельца передержки
+        /// Идентификатор владельца передержки
         /// </summary>
         public Guid IdOwner { get; }
     }

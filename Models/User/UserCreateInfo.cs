@@ -12,10 +12,12 @@ namespace Models.User
         /// </summary>
         /// <param name="login">Логин пользователя</param>
         /// <param name="password">Пароль</param>
-        public UserCreateInfo(string login, string password)
+        /// <param name="role">Роль</param>
+        public UserCreateInfo(string login, string password, string role)
         {
             Login = login ?? throw new ArgumentNullException(nameof(login));
             Passwod = password ?? throw new ArgumentNullException(nameof(password));
+            Role = role ?? throw new ArgumentNullException(nameof(role));
         }
 
         /// <summary>
