@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Client.Models.Place
 {
     /// <summary>
-    /// Передержка
+    /// Информация для создания передержки
     /// </summary>
-    public class Place : PlaceInfo
+    [DataContract]
+    public class PlaceBuildInfo
     {
         /// <summary>
         /// Название передержки
         /// </summary>
+        [DataMember(IsRequired = true)]
         public string Name { get; set; }
 
         /// <summary>
         /// Адрес передержки
         /// </summary>
+        [DataMember(IsRequired = true)]
         public string Address { get; set; }
     }
 }

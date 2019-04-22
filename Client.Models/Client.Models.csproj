@@ -37,10 +37,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Booking\BookingBuildInfo.cs" />
     <Compile Include="Booking\BookingInfo.cs" />
     <Compile Include="Booking\Booking.cs" />
     <Compile Include="Booking\BookingPatchInfo.cs" />
     <Compile Include="Place\Place.cs" />
+    <Compile Include="Place\PlaceBuildInfo.cs" />
     <Compile Include="Place\PlaceInfo.cs" />
     <Compile Include="Place\PlacePatchInfo.cs" />
     <Compile Include="User\User.cs" />

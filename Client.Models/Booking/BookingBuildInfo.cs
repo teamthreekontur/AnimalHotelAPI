@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Client.Models.Booking
 {
     /// <summary>
-    /// Бронь
+    /// Информация для создания брони
     /// </summary>
-    public class Booking : BookingInfo
+    [DataContract]
+    public class BookingBuildInfo
     {
         /// <summary>
         /// Начало брони
         /// </summary>
+        [DataMember(IsRequired = true)]
         public DateTime DateFrom { get; set; }
 
         /// <summary>
         /// Конец брони
         /// </summary>
+        [DataMember(IsRequired = true)]
         public DateTime DateTo { get; set; }
     }
 }

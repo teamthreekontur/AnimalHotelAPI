@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Models.Booking
 {
     /// <summary>
     /// Информация о брони
     /// </summary>
-    class BookingInfo
+    public class BookingInfo
     {
         /// <summary>
         /// Идентификатор брони
