@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{93FBC7FB-1CDF-4B28-B7E7-8C24ED53CE8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalHotelApi", "AnimalHotelApi\AnimalHotelApi.csproj", "{D43D4F67-8D82-44ED-A895-E2607AFDA245}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Models", "Client.Models\Client.Models.csproj", "{8261CCB0-7BD3-46EF-A3AA-FDF467610412}"
 EndProject
 Global
