@@ -1,17 +1,5 @@
 ﻿namespace Notes.API.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
-    using Notes.API.Auth;
-    using Notes.API.Errors;
-    using Notes.Models.Converters.Notes;
-    using Notes.Models.Notes.Repositories;
-    using Model = global::Notes.Models;
-
     [Route("v1/places")]
     public sealed class PlaceController : ApiController
     {
@@ -59,7 +47,7 @@
 
         [HttpGet]
         [Route("{placeId}", Name = "GetPlaceRoute")]
-        public IActionResult GetPlaceAsync([FromRoute]string noteId)
+        public IActionResult GetPlace([FromRoute]string placeId)
         {
             if (!Guid.TryParse(placeId, out var modelPlaceId))
             {
@@ -75,7 +63,7 @@
             }
             catch (Model.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.NoteNotFound(noteId);
+                var error = ServiceErrorResponses.NoteNotFound(placeId);
                 return this.NotFound(error);
             }
 
@@ -85,60 +73,56 @@
         }
 
         [HttpPatch]
-        [Route("{noteId}")]
-        public async Task<IActionResult> PatchNoteAsync([FromRoute]string noteId, [FromBody]Client.Notes.NotePatchInfo patchInfo, CancellationToken cancellationToken)
+        [Route("{placeId}")]
+        public IActionResult PatchPlace([FromRoute]string placeId, [FromBody]Client.Place.PlacePatchInfo patchInfo)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
             if (patchInfo == null)
             {
-                var error = ServiceErrorResponses.BodyIsMissing("NotePatchInfo");
+                var error = ServiceErrorResponses.BodyIsMissing("PlacePatchInfo");
                 return this.BadRequest(error);
             }
 
-            if (!Guid.TryParse(noteId, out var noteIdGuid))
+            if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.NoteNotFound(noteId);
+                var error = ServiceErrorResponses.PlaceNotFound(placeId);
                 return this.NotFound(error);
             }
 
-            var modelPathInfo = NotePathcInfoConverter.Convert(noteIdGuid, patchInfo);
+            var modelPathInfo = PlacePathcInfoConverter.Convert(placeIdGuid, patchInfo);
 
-            Model.Notes.Note modelNote = null;
+            Model.Place.Place modelPlace = null;
 
             try
             {
-                modelNote = await this.repository.PatchAsync(modelPathInfo, cancellationToken).ConfigureAwait(false);
+                modelPlace = this.repository.Patch(modelPathInfo);
             }
-            catch (Model.Notes.NoteNotFoundExcepction)
+            catch (Model.Place.PlaceNotFoundExcepction)
             {
-                var error = ServiceErrorResponses.NoteNotFound(noteId);
+                var error = ServiceErrorResponses.PlaceNotFound(placeId);
                 return this.NotFound(error);
             }
 
-            var clientNote = NoteConverter.Convert(modelNote);
-            return this.Ok(clientNote);
+            var clientPlace = PlaceConverter.Convert(modelPlace);
+            return this.Ok(clientPlace);
         }
 
         [HttpDelete]
-        [Route("{noteId}")]
-        public async Task<IActionResult> DeleteNoteAsync([FromRoute]string noteId, CancellationToken cancellationToken)
+        [Route("{placeId}")]
+        public async Task<IActionResult> DeletePlaceAsync([FromRoute]string placeId)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (!Guid.TryParse(noteId, out var noteIdGuid))
+            if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.NoteNotFound(noteId);
+                var error = ServiceErrorResponses.NoteNotFound(placeId);
                 return this.NotFound(error);
             }
 
             try
             {
-                await this.repository.RemoveAsync(noteIdGuid, cancellationToken).ConfigureAwait(false);
+                this.repository.Remove(placeIdGuid);
             }
-            catch (Model.Notes.NoteNotFoundExcepction)
+            catch (Model.Place.PlaceNotFoundExcepction)
             {
-                var error = ServiceErrorResponses.NoteNotFound(noteId);
+                var error = ServiceErrorResponses.PlaceNotFound(placeId);
                 return this.NotFound(error);
             }
 
