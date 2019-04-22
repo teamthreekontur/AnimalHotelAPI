@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Models.Place.Repository
 {
-    class MemoryPlaceRepository : IPlaceRepository
+    public class MemoryPlaceRepository : IPlaceRepository
     {
         private readonly Dictionary<Guid, Place> primaryKeyIndex;
 

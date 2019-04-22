@@ -5,7 +5,7 @@ namespace Models.Booking
     /// <summary>
     /// Информация для изменения брони
     /// </summary>
-    class BookingPatchInfo
+    public class BookingPatchInfo
     {
         /// <summary>
         /// Создает новый экземпляр объекта, описывающего изменение брони

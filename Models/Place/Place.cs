@@ -5,7 +5,7 @@ namespace Models.Place
     /// <summary>
     /// Передержка
     /// </summary>
-    class Place
+    public class Place
     {
         /// <summary>
         /// Идентификатор передержки

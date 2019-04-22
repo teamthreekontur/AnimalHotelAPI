@@ -5,7 +5,7 @@ namespace Models.Place
     /// <summary>
     /// Информация для изменения передержки
     /// </summary>
-    class PlacePatchInfo
+    public class PlacePatchInfo
     {
         /// <summary>
         /// Создает новый экземпляр объекта, описывающего изменение передержки

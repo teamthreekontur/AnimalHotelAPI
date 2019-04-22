@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Place
 {
-    class PlaceFilterInfo
+    public class PlaceFilterInfo
     {
     }
 }

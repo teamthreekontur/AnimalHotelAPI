@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Booking
 {
-    class BookingFilterInfo
+    public class BookingFilterInfo
     {
     }
 }

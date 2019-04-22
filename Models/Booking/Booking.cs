@@ -9,7 +9,7 @@ namespace Models.Booking
     /// <summary>
     /// Бронь
     /// </summary>
-    class Booking
+    public class Booking
     {
         /// <summary>
         /// Идентификатор брони

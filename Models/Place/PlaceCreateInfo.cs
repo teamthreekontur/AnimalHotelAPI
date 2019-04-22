@@ -6,7 +6,7 @@ namespace Models.Place
     /// <summary>
     /// Информация для создания передержки
     /// </summary>
-    class PlaceCreateInfo
+    public class PlaceCreateInfo
     {
         /// <summary>
         /// Инициализирует новый экземпляр описания для создания передержки

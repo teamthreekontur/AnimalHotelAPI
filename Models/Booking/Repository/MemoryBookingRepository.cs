@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Booking.Repository
 {
-    class MemoryBookingRepository : IBookingRepository
+    public class MemoryBookingRepository : IBookingRepository
     {
         private readonly Dictionary<Guid, Booking> primaryKeyIndex;
 

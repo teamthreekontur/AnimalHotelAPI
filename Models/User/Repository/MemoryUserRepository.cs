@@ -6,7 +6,7 @@ namespace Models.User.Repository
     /// <summary>
     /// Хранилище пользователей в памяти
     /// </summary>
-    class MemoryUserRepository : IUserRepository
+    public class MemoryUserRepository : IUserRepository
     {
         private readonly Dictionary<Guid, User> primaryKeyIndex;
         private readonly Dictionary<string, User> loginIndex;

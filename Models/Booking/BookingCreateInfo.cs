@@ -9,7 +9,7 @@ namespace Models.Booking
     /// <summary>
     /// Информация для создания брони
     /// </summary>
-    class BookingCreateInfo
+    public class BookingCreateInfo
     {
         /// <summary>
         /// Инициализирует новый экземпляр описания для создания брони

@@ -5,7 +5,7 @@ namespace Models.User
     /// <summary>
     /// Исключение, которое возникает при попытке создать существующего пользователя
     /// </summary>
-    class UserDuplicationException : Exception
+    public class UserDuplicationException : Exception
     {
         /// <summary>
         /// Инициализировать эксземпляр исключения по логину пользователя

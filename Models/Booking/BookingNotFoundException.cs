@@ -9,7 +9,7 @@ namespace Models.Booking
     /// <summary>
     /// Исключение, которое возникает при попытке получить несуществующую бронь
     /// </summary>
-    class BookingNotFoundException : Exception
+    public class BookingNotFoundException : Exception
     {
         /// <summary>
         /// Инициализировать экземпляр исключения по идентификатору брони
