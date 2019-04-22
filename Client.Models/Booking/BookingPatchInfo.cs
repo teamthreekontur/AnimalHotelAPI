@@ -7,7 +7,7 @@ namespace Client.Models.Booking
     /// Информация для изменения брони
     /// </summary>
     [DataContract]
-    class BookingPatchInfo
+    public class BookingPatchInfo
     {
         /// <summary>
         /// Начало брони
