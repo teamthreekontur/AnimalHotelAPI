@@ -19,7 +19,7 @@
 
         [HttpPost]
         [Route("")]
-        public IActionResult CreatePlace([FromBody]Client.Place.PlaceBuildInfo buildInfo)
+        public IActionResult CreatePlace([FromBody]Client.Models.Place.PlaceBuildInfo buildInfo)
         {
             if (buildInfo == null)
             {
@@ -51,19 +51,19 @@
         {
             if (!Guid.TryParse(placeId, out var modelPlaceId))
             {
-                var error = ServiceErrorResponses.NoteNotFound(placeId);
+                var error = ServiceErrorResponses.PlaceNotFound(placeId);
                 return this.NotFound(error);
             }
 
-            Model.Place.Place modelPlace = null;
+            Models.Place.Place modelPlace = null;
 
             try
             {
                 modelPlace = this.repository.Get(modelPlaceId);
             }
-            catch (Model.Place.PlaceNotFoundException)
+            catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.NoteNotFound(placeId);
+                var error = ServiceErrorResponses.PlaceNotFound(placeId);
                 return this.NotFound(error);
             }
 
@@ -74,7 +74,7 @@
 
         [HttpPatch]
         [Route("{placeId}")]
-        public IActionResult PatchPlace([FromRoute]string placeId, [FromBody]Client.Place.PlacePatchInfo patchInfo)
+        public IActionResult PatchPlace([FromRoute]string placeId, [FromBody]Client.Models.Place.PlacePatchInfo patchInfo)
         {
             if (patchInfo == null)
             {
@@ -88,13 +88,13 @@
                 return this.NotFound(error);
             }
 
-            var modelPathInfo = PlacePathcInfoConverter.Convert(placeIdGuid, patchInfo);
+            var placePathInfo = PlacePathcInfoConverter.Convert(placeIdGuid, patchInfo);
 
             Model.Place.Place modelPlace = null;
 
             try
             {
-                modelPlace = this.repository.Patch(modelPathInfo);
+                modelPlace = this.repository.Patch(placePathInfo);
             }
             catch (Model.Place.PlaceNotFoundExcepction)
             {
@@ -108,11 +108,11 @@
 
         [HttpDelete]
         [Route("{placeId}")]
-        public async Task<IActionResult> DeletePlaceAsync([FromRoute]string placeId)
+        public IActionResult DeletePlaceAsync([FromRoute]string placeId)
         {
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.NoteNotFound(placeId);
+                var error = ServiceErrorResponses.PlaceNotFound(placeId);
                 return this.NotFound(error);
             }
 
