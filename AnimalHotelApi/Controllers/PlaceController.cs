@@ -1,4 +1,4 @@
-﻿namespace Notes.API.Controllers
+﻿namespace Place.API.Controllers
 {
     [Route("v1/places")]
     public sealed class PlaceController : ApiController
