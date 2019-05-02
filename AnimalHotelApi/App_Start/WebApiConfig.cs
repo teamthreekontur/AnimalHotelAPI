@@ -1,7 +1,10 @@
-﻿using Models.User.Repository;
+﻿using Models.Place.Repository;
+using Models.User.Repository;
+using MongoDB.Driver;
 using Swashbuckle.Application;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using System.Xml.XPath;
@@ -14,8 +17,12 @@ namespace AnimalHotelApi
     {
         public static void Register(HttpConfiguration config)
         {
+            var mongoClient = new MongoClient(ConfigurationManager.ConnectionStrings["AniHoDb"].ConnectionString);
             var container = new UnityContainer();
-            container.RegisterType<IUserRepository, MemoryUserRepository>();
+            container.RegisterType<IUserRepository, DbUserRepository>();
+            container.RegisterType<IPlaceRepository, DbPlaceRepository>();
+            container.RegisterInstance<IMongoClient>(mongoClient);
+
             config.DependencyResolver = new UnityResolver(container);
 
             // Attribute routing

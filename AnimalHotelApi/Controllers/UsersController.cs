@@ -18,6 +18,7 @@ namespace AnimalHotelApi.Controllers
             this.userRepository = userRepository;
         }
 
+        [HttpPatch]
         public IHttpActionResult Patch(string guid, [FromBody]string value)
         {
             return this.BadRequest();

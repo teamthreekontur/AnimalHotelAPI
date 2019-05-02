@@ -20,7 +20,7 @@ namespace Models.User
         /// <summary>
         /// Пароль
         /// </summary>
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
 
         /// <summary>
         /// Роль

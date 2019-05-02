@@ -1,4 +1,4 @@
-﻿using AnimalHotelApi.Models;
+﻿using Client.Models.User;
 using Models.User;
 using Models.User.Repository;
 using Swashbuckle.Swagger.Annotations;
@@ -20,13 +20,13 @@ namespace AnimalHotelApi.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Post([FromBody] UserRegisterInfo userRegisterInfo)
+        public IHttpActionResult Post([FromBody] UserRegistrationInfo userRegisterInfo)
         {
             if (userRegisterInfo == null)
             {
                 return this.BadRequest();
             }
-            var uci = new UserCreateInfo(userRegisterInfo.Username, userRegisterInfo.Password, "user");
+            var uci = new UserCreateInfo(userRegisterInfo.Login, userRegisterInfo.Password, "user");
             try
             {
                 var user = userRepository.Create(uci);
