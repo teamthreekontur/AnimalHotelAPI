@@ -75,7 +75,7 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="placeFilter">Поля по которым нужно искать передержки</param>
         /// <returns>Список передержек</returns>
-        public Place[] Get(PlaceFilterInfo placeFilter)
+        public List<Place> Get(PlaceFilterInfo placeFilter)
         {
             throw new NotImplementedException();
         }

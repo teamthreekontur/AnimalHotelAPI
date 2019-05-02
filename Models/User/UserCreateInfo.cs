@@ -16,7 +16,7 @@ namespace Models.User
         public UserCreateInfo(string login, string password, string role)
         {
             Login = login ?? throw new ArgumentNullException(nameof(login));
-            Passwod = password ?? throw new ArgumentNullException(nameof(password));
+            Password = password ?? throw new ArgumentNullException(nameof(password));
             Role = role ?? throw new ArgumentNullException(nameof(role));
         }
 
@@ -28,7 +28,7 @@ namespace Models.User
         /// <summary>
         /// Пароль
         /// </summary>
-        public string Passwod { get; }
+        public string Password { get; }
 
         /// <summary>
         /// Роль
