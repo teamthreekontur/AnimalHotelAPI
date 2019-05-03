@@ -1,4 +1,12 @@
-﻿namespace Place.API.Controllers
+﻿using AnimalHotelApi.Controllers;
+using System.Web.Http;
+using Models.Place.Repository;
+using System;
+using Client.Models.Place;
+using System.Collections.Generic;
+using AnimalHotelApi.Errors;
+
+namespace Place.API.Controllers
 {
     [Route("v1/places")]
     public sealed class PlaceController : ApiController
@@ -12,14 +20,13 @@
             {
                 throw new ArgumentNullException(nameof(repository));
             }
-
             this.repository = repository;
             this.authenticator = authenticator;
         }
 
         [HttpPost]
         [Route("")]
-        public IActionResult CreatePlace([FromBody]Client.Models.Place.PlaceBuildInfo buildInfo)
+        public IHttpActionResult CreatePlace([FromBody]PlaceBuildInfo buildInfo)
         {
             if (buildInfo == null)
             {
@@ -27,14 +34,13 @@
                 return this.BadRequest(error);
             }
 
-            var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
+            //var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
             //this.HttpContext.User
 
             var userId = Guid.Empty.ToString();
 
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
             var modelPlaceInfo = this.repository.Create(creationInfo);
-
             var clientPlaceInfo = PlaceInfoConverter.Convert(modelPlaceInfo);
 
             var routeParams = new Dictionary<string, object>
@@ -47,12 +53,15 @@
 
         [HttpGet]
         [Route("{placeId}", Name = "GetPlaceRoute")]
-        public IActionResult GetPlace([FromRoute]string placeId)
+        public IHttpActionResult GetPlace([FromUri]string placeId)
         {
             if (!Guid.TryParse(placeId, out var modelPlaceId))
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                    return this.NotFound();
+                }
             }
 
             Models.Place.Place modelPlace = null;
@@ -63,18 +72,21 @@
             }
             catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                    return this.NotFound();
+                }
             }
 
-            var clientNote = NoteConverter.Convert(modelNote);
+            var clientPlace = PlaceConverter.Convert(modelPlace);
 
-            return this.Ok(clientNote);
+            return this.Ok(clientPlace);
         }
 
         [HttpPatch]
         [Route("{placeId}")]
-        public IActionResult PatchPlace([FromRoute]string placeId, [FromBody]Client.Models.Place.PlacePatchInfo patchInfo)
+        public IHttpActionResult PatchPlace([FromUri]string placeId, [FromBody]Client.Models.Place.PlacePatchInfo patchInfo)
         {
             if (patchInfo == null)
             {
@@ -84,22 +96,28 @@
 
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                    return this.NotFound();
+                }
             }
 
             var placePathInfo = PlacePathcInfoConverter.Convert(placeIdGuid, patchInfo);
 
-            Model.Place.Place modelPlace = null;
+            Models.Place.Place modelPlace = null;
 
             try
             {
                 modelPlace = this.repository.Patch(placePathInfo);
             }
-            catch (Model.Place.PlaceNotFoundExcepction)
+            catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                    return this.NotFound();
+                }
             }
 
             var clientPlace = PlaceConverter.Convert(modelPlace);
@@ -108,25 +126,31 @@
 
         [HttpDelete]
         [Route("{placeId}")]
-        public IActionResult DeletePlaceAsync([FromRoute]string placeId)
+        public IHttpActionResult DeletePlace([FromUri]string placeId)
         {
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                    return this.NotFound();
+                }
             }
 
             try
             {
                 this.repository.Remove(placeIdGuid);
             }
-            catch (Model.Place.PlaceNotFoundExcepction)
+            catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                    return this.NotFound();
+                }
             }
 
-            return this.NoContent();
+            return this.NotFound();
         }
     }
 }

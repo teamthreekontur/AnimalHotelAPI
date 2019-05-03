@@ -5,7 +5,7 @@ namespace Models.Place.Repository
     /// <summary>
     /// Интерфейс, описывающий хранилище пользователей
     /// </summary>
-    interface IPlaceRepository
+    public interface IPlaceRepository
     {
         /// <summary>
         /// Создать новую передержку

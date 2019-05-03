@@ -20,5 +20,15 @@ namespace Client.Models.Place
         /// Адрес передержки
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Описание передержки
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Цена передержки
+        /// </summary>
+        public decimal Price { get; set; }
     }
 }
