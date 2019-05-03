@@ -5,6 +5,7 @@ using System;
 using Client.Models.Place;
 using System.Collections.Generic;
 using AnimalHotelApi.Errors;
+using Models.Converters.Places;
 
 namespace Place.API.Controllers
 {
@@ -16,11 +17,7 @@ namespace Place.API.Controllers
 
         public PlaceController(IPlaceRepository repository, IAuthenticator authenticator)
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-            this.repository = repository;
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.authenticator = authenticator;
         }
 
@@ -38,9 +35,9 @@ namespace Place.API.Controllers
             //this.HttpContext.User
 
             var userId = Guid.Empty.ToString();
-
+         
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
-            var modelPlaceInfo = this.repository.Create(creationInfo);
+            var modelPlaceInfo = repository.Create(creationInfo);
             var clientPlaceInfo = PlaceInfoConverter.Convert(modelPlaceInfo);
 
             var routeParams = new Dictionary<string, object>
@@ -60,7 +57,6 @@ namespace Place.API.Controllers
                 if (placeId == null)
                 {
                     throw new ArgumentNullException(nameof(placeId));
-                    return this.NotFound();
                 }
             }
 
@@ -75,13 +71,12 @@ namespace Place.API.Controllers
                 if (placeId == null)
                 {
                     throw new ArgumentNullException(nameof(placeId));
-                    return this.NotFound();
                 }
             }
 
-            var clientPlace = PlaceConverter.Convert(modelPlace);
+            var clientPlace = Models.Converters.Places.PlaceConverter.Convert(modelPlace);
 
-            return this.Ok(clientPlace);
+            return Ok(clientPlace);
         }
 
         [HttpPatch]
@@ -99,11 +94,10 @@ namespace Place.API.Controllers
                 if (placeId == null)
                 {
                     throw new ArgumentNullException(nameof(placeId));
-                    return this.NotFound();
                 }
             }
 
-            var placePathInfo = PlacePathcInfoConverter.Convert(placeIdGuid, patchInfo);
+            var placePathInfo = PlacePatchInfoConverter.Convert(placeIdGuid, patchInfo);
 
             Models.Place.Place modelPlace = null;
 
@@ -116,12 +110,11 @@ namespace Place.API.Controllers
                 if (placeId == null)
                 {
                     throw new ArgumentNullException(nameof(placeId));
-                    return this.NotFound();
                 }
             }
 
             var clientPlace = PlaceConverter.Convert(modelPlace);
-            return this.Ok(clientPlace);
+            return Ok(clientPlace);
         }
 
         [HttpDelete]
@@ -133,24 +126,22 @@ namespace Place.API.Controllers
                 if (placeId == null)
                 {
                     throw new ArgumentNullException(nameof(placeId));
-                    return this.NotFound();
                 }
             }
 
             try
             {
-                this.repository.Remove(placeIdGuid);
+                repository.Remove(placeIdGuid);
             }
             catch (Models.Place.PlaceNotFoundException)
             {
                 if (placeId == null)
                 {
                     throw new ArgumentNullException(nameof(placeId));
-                    return this.NotFound();
                 }
             }
 
-            return this.NotFound();
+            return NotFound();
         }
     }
 }
