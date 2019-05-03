@@ -19,5 +19,17 @@ namespace Client.Models.Place
         /// </summary>
         [DataMember(IsRequired = false)]
         public string Address { get; set; }
+
+        /// <summary>
+        /// Описание передержки
+        /// </summary>
+        [DataMember(IsRequired = true)]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Цена передержки
+        /// </summary>
+        [DataMember(IsRequired = true)]
+        public decimal Price { get; set; }
     }
 }

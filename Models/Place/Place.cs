@@ -26,5 +26,15 @@ namespace Models.Place
         /// Идентификатор владельца передержки
         /// </summary>
         public Guid IdOwner { get; set; }
+
+        /// <summary>
+        /// Описание передержки
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Цена передержки
+        /// </summary>
+        public decimal Price { get; set; }
     }
 }
