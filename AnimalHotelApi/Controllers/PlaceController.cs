@@ -1,4 +1,13 @@
-﻿namespace Place.API.Controllers
+﻿using AnimalHotelApi.Controllers;
+using System.Web.Http;
+using Models.Place.Repository;
+using System;
+using Client.Models.Place;
+using System.Collections.Generic;
+using AnimalHotelApi.Errors;
+using Models.Converters.Places;
+
+namespace Place.API.Controllers
 {
     [Route("v1/places")]
     public sealed class PlaceController : ApiController
@@ -8,18 +17,13 @@
 
         public PlaceController(IPlaceRepository repository, IAuthenticator authenticator)
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-
-            this.repository = repository;
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.authenticator = authenticator;
         }
 
         [HttpPost]
         [Route("")]
-        public IActionResult CreatePlace([FromBody]Client.Models.Place.PlaceBuildInfo buildInfo)
+        public IHttpActionResult CreatePlace([FromBody]PlaceBuildInfo buildInfo)
         {
             if (buildInfo == null)
             {
@@ -27,14 +31,13 @@
                 return this.BadRequest(error);
             }
 
-            var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
+            //var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
             //this.HttpContext.User
 
             var userId = Guid.Empty.ToString();
-
+         
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
-            var modelPlaceInfo = this.repository.Create(creationInfo);
-
+            var modelPlaceInfo = repository.Create(creationInfo);
             var clientPlaceInfo = PlaceInfoConverter.Convert(modelPlaceInfo);
 
             var routeParams = new Dictionary<string, object>
@@ -47,12 +50,14 @@
 
         [HttpGet]
         [Route("{placeId}", Name = "GetPlaceRoute")]
-        public IActionResult GetPlace([FromRoute]string placeId)
+        public IHttpActionResult GetPlace([FromUri]string placeId)
         {
             if (!Guid.TryParse(placeId, out var modelPlaceId))
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                }
             }
 
             Models.Place.Place modelPlace = null;
@@ -63,18 +68,20 @@
             }
             catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                }
             }
 
-            var clientNote = NoteConverter.Convert(modelNote);
+            var clientPlace = Models.Converters.Places.PlaceConverter.Convert(modelPlace);
 
-            return this.Ok(clientNote);
+            return Ok(clientPlace);
         }
 
         [HttpPatch]
         [Route("{placeId}")]
-        public IActionResult PatchPlace([FromRoute]string placeId, [FromBody]Client.Models.Place.PlacePatchInfo patchInfo)
+        public IHttpActionResult PatchPlace([FromUri]string placeId, [FromBody]Client.Models.Place.PlacePatchInfo patchInfo)
         {
             if (patchInfo == null)
             {
@@ -84,49 +91,57 @@
 
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                }
             }
 
-            var placePathInfo = PlacePathcInfoConverter.Convert(placeIdGuid, patchInfo);
+            var placePathInfo = PlacePatchInfoConverter.Convert(placeIdGuid, patchInfo);
 
-            Model.Place.Place modelPlace = null;
+            Models.Place.Place modelPlace = null;
 
             try
             {
                 modelPlace = this.repository.Patch(placePathInfo);
             }
-            catch (Model.Place.PlaceNotFoundExcepction)
+            catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                }
             }
 
             var clientPlace = PlaceConverter.Convert(modelPlace);
-            return this.Ok(clientPlace);
+            return Ok(clientPlace);
         }
 
         [HttpDelete]
         [Route("{placeId}")]
-        public IActionResult DeletePlaceAsync([FromRoute]string placeId)
+        public IHttpActionResult DeletePlace([FromUri]string placeId)
         {
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                }
             }
 
             try
             {
-                this.repository.Remove(placeIdGuid);
+                repository.Remove(placeIdGuid);
             }
-            catch (Model.Place.PlaceNotFoundExcepction)
+            catch (Models.Place.PlaceNotFoundException)
             {
-                var error = ServiceErrorResponses.PlaceNotFound(placeId);
-                return this.NotFound(error);
+                if (placeId == null)
+                {
+                    throw new ArgumentNullException(nameof(placeId));
+                }
             }
 
-            return this.NoContent();
+            return NotFound();
         }
     }
 }

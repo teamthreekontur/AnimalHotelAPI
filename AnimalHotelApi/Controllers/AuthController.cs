@@ -1,4 +1,5 @@
-﻿using Models.User;
+﻿using Client.Models.User;
+using Models.User;
 using Models.User.Repository;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+
 
 namespace AnimalHotelApi.Controllers
 {
@@ -25,15 +27,15 @@ namespace AnimalHotelApi.Controllers
             this.authenticator = authenticator;
         }
 
-        public IActionResult Registration([FromBody] UserRegistrationInfo userRegistrationInfo)
+        public IHttpActionResult Registration([FromBody] UserRegistrationInfo userRegistrationInfo)
         {
-            var userInfo = this.repository.Create(new UserCreationInfo(userRegistrationInfo.Login, userRegistrationInfo.Password));
+            var userInfo = this.repository.Create(new UserCreateInfo(userRegistrationInfo.Login, userRegistrationInfo.Password, "user"));
             return this.Ok();
         }
 
-        public IActionResult Enter([FromBody] UserRegistrationInfo userRegistrationInfo)
+        public IHttpActionResult Enter([FromBody] UserRegistrationInfo userRegistrationInfo)
         {
-            var user = this.authenticator.AuthenticateAsync(userRegistrationInfo.Login, userRegistrationInfo.Password);
+            var user = this.authenticator.Authenticate(userRegistrationInfo.Login, userRegistrationInfo.Password);
             return this.Ok();
         }
     }

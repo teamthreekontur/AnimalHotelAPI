@@ -125,9 +125,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\IAuthenticator.cs" />
     <Compile Include="Controllers\PlaceController.cs" />
     <Compile Include="Controllers\Register.cs" />
+    <Compile Include="Controllers\SessionState.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Errors\ServiceErrorResponses.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,6 +154,14 @@
     <ProjectReference Include="..\Client.Models\Client.Models.csproj">
       <Project>{8261ccb0-7bd3-46ef-a3aa-fdf467610412}</Project>
       <Name>Client.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Client.Models\Client.Models.csproj">
+      <Project>{8261ccb0-7bd3-46ef-a3aa-fdf467610412}</Project>
+      <Name>Client.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models.Converters\Models.Converters.csproj">
+      <Project>{b7006b82-19d3-4ed9-958e-6948329e0a85}</Project>
+      <Name>Models.Converters</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{93fbc7fb-1cdf-4b28-b7e7-8c24ed53ce8d}</Project>
