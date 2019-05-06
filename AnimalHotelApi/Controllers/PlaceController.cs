@@ -4,7 +4,6 @@ using Models.Place.Repository;
 using System;
 using Client.Models.Place;
 using System.Collections.Generic;
-using AnimalHotelApi.Errors;
 using Models.Converters.Places;
 
 namespace Place.API.Controllers
