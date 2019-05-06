@@ -44,16 +44,20 @@
     <Compile Include="Booking\BookingInfo.cs" />
     <Compile Include="Booking\Booking.cs" />
     <Compile Include="Booking\BookingPatchInfo.cs" />
-    <Compile Include="Place\Place.cs" />
     <Compile Include="Place\PlaceBuildInfo.cs" />
     <Compile Include="Place\PlaceFilterInfo.cs" />
     <Compile Include="Place\PlaceInfo.cs" />
     <Compile Include="Place\PlacePatchInfo.cs" />
     <Compile Include="User\User.cs" />
+    <Compile Include="User\UserPatchInfo.cs" />
     <Compile Include="User\UserRegistrationInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>

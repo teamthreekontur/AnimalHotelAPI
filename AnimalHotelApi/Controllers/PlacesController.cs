@@ -1,68 +1,176 @@
-﻿using Models.Place;
-using Models.Place.Repository;
-using ClientPlace = Client.Models.Place;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using AnimalHotelApi.Controllers;
 using System.Web.Http;
+using Models.Place.Repository;
+using System;
+using Client.Models.Place;
+using System.Collections.Generic;
+using AnimalHotelApi.Models;
+using Models.Converters.Places;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Linq;
 
-namespace AnimalHotelApi.Controllers
+namespace Place.API.Controllers
 {
-    public class PlacesController : ApiController
+    [RoutePrefix("api/places")]
+    public sealed class PlacesController : ApiController
     {
-        private readonly IPlaceRepository placeRepository;
-        public PlacesController(IPlaceRepository placeRepository)
+        private readonly IPlaceRepository repository;
+        private readonly IAuthentificator authenticator;
+
+        public PlacesController(IPlaceRepository repository, IAuthentificator authenticator)
         {
-            this.placeRepository = placeRepository;
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.authenticator = authenticator;
         }
-        
-        [HttpGet]
-        public IHttpActionResult Get([FromBody]ClientPlace.PlaceFilterInfo placeFilterInfo)
+
+        [HttpPost]
+        public IHttpActionResult CreatePlace([FromBody]PlaceBuildInfo buildInfo)
         {
-            return this.Ok(placeRepository.Get(new PlaceFilterInfo())
-                .Select(x => new ClientPlace.Place()
-                {
-                    Address = x.Address,
-                    Id = x.Id.ToString(),
-                    OwnerId = x.IdOwner.ToString(),
-                    Name = x.Name
-                }));
+            if (buildInfo == null)
+            {
+                return this.BadRequest();
+            }
+
+            string sessionId = "";
+            CookieHeaderValue cookie = Request.Headers.GetCookies("SessionId").FirstOrDefault();
+            if (cookie != null)
+            {
+                sessionId = cookie["SessionId"].Value;
+            }
+
+            if (!authenticator.TryGetSession(sessionId, out var sessionState))
+            {
+                return this.Unauthorized();
+            }
+
+            var creationInfo = PlaceBuildInfoConverter.Convert(sessionState.UserId, buildInfo);
+            var modelPlaceInfo = repository.Create(creationInfo);
+            var clientPlaceInfo = PlaceInfoConverter.Convert(modelPlaceInfo);
+
+            var routeParams = new Dictionary<string, object>
+            {
+                { "placeId", clientPlaceInfo.Id }
+            };
+
+            return this.CreatedAtRoute("GetPlaceRoute", routeParams, clientPlaceInfo);
         }
 
         [HttpGet]
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult GetPlaces([FromUri]PlaceFilterInfo placeFilterInfo)
         {
-            if (!Guid.TryParse(id, out var guid))
+            return this.Ok(new
+            {
+                Places = repository.Get(PlaceFilterInfoConverter.Convert(placeFilterInfo))
+            });
+        }
+
+        [HttpGet]
+        [Route("{placeId}", Name = "GetPlaceRoute")]
+        public IHttpActionResult GetPlace([FromUri]string placeId)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            if (!Guid.TryParse(placeId, out var modelPlaceId))
+            {
+                return this.BadRequest();
+            }
+
+            Models.Place.Place modelPlace = null;
+
+            try
+            {
+                modelPlace = this.repository.Get(modelPlaceId);
+            }
+            catch (Models.Place.PlaceNotFoundException)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(PlaceConverter.Convert(modelPlace));
+        }
+
+        [HttpPatch]
+        [Route("{placeId}")]
+        public IHttpActionResult PatchPlace([FromUri]string placeId, [FromBody]PlacePatchInfo patchInfo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            if (!Guid.TryParse(placeId, out var placeIdGuid))
+            {
+                return this.BadRequest();
+            }
+
+            string sessionId = "";
+            CookieHeaderValue cookie = Request.Headers.GetCookies("SessionId").FirstOrDefault();
+            if (cookie != null)
+            {
+                sessionId = cookie["SessionId"].Value;
+            }
+
+            if (!authenticator.TryGetSession(sessionId, out var sessionState))
+            {
+                return this.Unauthorized();
+            }
+
+            try
+            {
+                var place = this.repository.Get(placeIdGuid);
+                if (sessionState.UserId != place.OwnerId)
+                {
+                    return this.Unauthorized();
+                }
+            }
+            catch (Exception)
+            {
+                return this.Unauthorized();
+            }
+
+            var placePatchInfo = PlacePatchInfoConverter.Convert(placeIdGuid, patchInfo);
+            Models.Place.Place modelPlace = null;
+
+            try
+            {
+                modelPlace = this.repository.Patch(placePatchInfo);
+            }
+            catch (Models.Place.PlaceNotFoundException)
+            {
+                this.NotFound();
+            }
+
+            return Ok(PlaceConverter.Convert(modelPlace));
+        }
+
+        [HttpDelete]
+        [Route("{placeId}")]
+        public IHttpActionResult DeletePlace([FromUri]string placeId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
                 return this.BadRequest();
             }
             try
             {
-                return this.Ok(placeRepository.Get(guid));
+                repository.Remove(placeIdGuid);
             }
-            catch
+            catch (Models.Place.PlaceNotFoundException)
             {
                 return this.NotFound();
             }
+
+            return Ok();
         }
-
-        //[HttpPost]
-        //public IHttpActionResult Post([FromBody]ClientPlace.PlaceBuildInfo placeBuildInfo)
-        //{
-            
-        //    var placeCreateInfo = new PlaceCreateInfo(placeBuildInfo.Name, placeBuildInfo.Address);
-        //}
-        
-        //[HttpPatch]
-        //public IHttpActionResult Patch(string id, [FromBody]ClientPlace.PlacePatchInfo placePatchInfo)
-        //{
-        //}
-
-        //[HttpDelete]
-        //public IHttpActionResult Delete(string id)
-        //{
-        //}
     }
 }

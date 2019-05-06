@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    static class Helper
+    public static class Helper
     {
         /// <summary>
         /// Create MD5 hash from UTF-8 string

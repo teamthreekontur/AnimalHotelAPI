@@ -23,11 +23,12 @@
 
             var clientNoteInfo = new Client.PlaceInfo
             {
+                Id = modelPlaceInfo.Id.ToString(),
                 Name = modelPlaceInfo.Name,
                 Address = modelPlaceInfo.Address,
                 Price = modelPlaceInfo.Price,
                 Description = modelPlaceInfo.Description,
-                OwnerId = modelPlaceInfo.IdOwner.ToString()
+                OwnerId = modelPlaceInfo.OwnerId.ToString()
             };
 
             return clientNoteInfo;

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B7006B82-19D3-4ED9-958E-6948329E0A85}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Models.Converters</RootNamespace>
     <AssemblyName>Models.Converters</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
@@ -32,12 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Places\PlaceBuildInfoConverter.cs" />
     <Compile Include="Places\PlaceConverter.cs" />
+    <Compile Include="Places\PlaceFilterInfoConverter.cs" />
     <Compile Include="Places\PlaceInfoConverter.cs" />
     <Compile Include="Places\PlacePatchInfoConverter.cs" />
     <Compile Include="Users\UserConverter.cs" />

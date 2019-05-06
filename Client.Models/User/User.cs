@@ -8,11 +8,11 @@
         /// <summary>
         /// Идентификатор пользователя
         /// </summary>
-        public string Id { get; set; }
+        public string Id;
 
         /// <summary>
         /// Логин пользователя
         /// </summary>
-        public string Login { get; set; }
+        public string Login;
     }
 }

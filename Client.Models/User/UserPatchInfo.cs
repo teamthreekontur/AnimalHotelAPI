@@ -3,24 +3,26 @@ using System.Runtime.Serialization;
 
 namespace Client.Models.User
 {
-    /// <summary>
-    /// Информация для регистрации пользователя
-    /// </summary>
     [DataContract]
-    public class UserRegistrationInfo
+    public class UserPatchInfo
     {
         /// <summary>
         /// Логин пользователя
         /// </summary>
-        [DataMember(IsRequired = true)]
-        [Required]
-        public string Login { get; set; }
+        [DataMember(IsRequired = false)]
+        public string Login;
 
         /// <summary>
         /// Пароль пользователя
         /// </summary>
+        [DataMember(IsRequired = false)]
+        public string Password;
+
+        /// <summary>
+        /// Идентификатор сессии
+        /// </summary>
         [DataMember(IsRequired = true)]
         [Required]
-        public string Password { get; set; }
+        public string SessionId { get; set; }
     }
 }

@@ -15,21 +15,12 @@
         /// <param name="clientUserId">Идентификатор пользователя в клиентской модели</param>
         /// <param name="clientBuildInfo">Запрос на создание передержки в клиентской модели</param>
         /// <returns>Запрос на создание передержки в серверной модели</returns>
-        public static Model.PlaceCreateInfo Convert(string clientUserId, Client.PlaceBuildInfo clientBuildInfo)
+        public static Model.PlaceCreateInfo Convert(Guid clientUserId, Client.PlaceBuildInfo clientBuildInfo)
         {
-            if (clientUserId == null)
-            {
-                throw new ArgumentNullException(nameof(clientUserId));
-            }
 
             if (clientBuildInfo == null)
             {
                 throw new ArgumentNullException(nameof(clientBuildInfo));
-            }
-
-            if (!Guid.TryParse(clientUserId, out var modelUserId))
-            {
-                throw new ArgumentException($"The client user id \"{clientUserId}\" is invalid.", nameof(clientUserId));
             }
 
 

@@ -1,4 +1,5 @@
 ﻿using Client.Models.User;
+using Models.Converters.Users;
 using Models.User;
 using Models.User.Repository;
 using Swashbuckle.Swagger.Annotations;
@@ -11,6 +12,7 @@ using System.Web.Http;
 
 namespace AnimalHotelApi.Controllers
 {
+    [RoutePrefix("api/register")]
     public class RegisterController : ApiController
     {
         private readonly IUserRepository userRepository;
@@ -22,17 +24,17 @@ namespace AnimalHotelApi.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody] UserRegistrationInfo userRegisterInfo)
         {
-            if (userRegisterInfo == null)
+            if (!ModelState.IsValid)
             {
                 return this.BadRequest();
             }
-            var uci = new UserCreateInfo(userRegisterInfo.Login, userRegisterInfo.Password, "user");
+
             try
             {
-                var user = userRepository.Create(uci);
+                var user = userRepository.Create(UserConverter.Convert(userRegisterInfo));
                 return this.Ok(user);
             }
-            catch (Exception)
+            catch (UserDuplicationException)
             {
                 return this.Conflict();
             }

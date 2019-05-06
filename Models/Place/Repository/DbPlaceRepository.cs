@@ -22,11 +22,13 @@ namespace Models.Place.Repository
             {
                 throw new ArgumentNullException(nameof(createInfo));
             }
+
             var place = new Place()
             {
                 Id = Guid.NewGuid(),
                 Address = createInfo.Address,
-                IdOwner = createInfo.IdOwner,
+                OwnerId = createInfo.IdOwner,
+                Description = createInfo.Description,
                 Name = createInfo.Name
             };
             places.InsertOne(place);

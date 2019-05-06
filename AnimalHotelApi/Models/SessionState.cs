@@ -1,10 +1,10 @@
-﻿namespace AnimalHotelApi.Controllers
+﻿namespace AnimalHotelApi.Models
 {
     using System;
 
     public class SessionState
     {
-        public SessionState(string sessionId, Guid userId)
+        public SessionState(Guid sessionId, Guid userId)
         {
             if (sessionId == null)
             {
@@ -15,7 +15,7 @@
             this.UserId = userId;
         }
 
-        public string SessionId { get; }
+        public Guid SessionId { get; }
 
         public Guid UserId { get; }
     }

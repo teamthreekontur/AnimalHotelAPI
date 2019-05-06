@@ -14,21 +14,21 @@
         /// </summary>
         /// <param name="modelPlace">Передержка в серверной модели</param>
         /// <returns>Передержка в клиентской модели</returns>
-        public static Client.Place Convert(Model.Place modelPlace)
+        public static Client.PlaceInfo Convert(Model.Place modelPlace)
         {
             if (modelPlace == null)
             {
                 throw new ArgumentNullException(nameof(modelPlace));
             }
 
-            var clientNote = new Client.Place
+            var clientNote = new Client.PlaceInfo
             {
                 Id = modelPlace.Id.ToString(),
                 Name = modelPlace.Name,
                 Address = modelPlace.Address,
                 Price = modelPlace.Price,
                 Description = modelPlace.Description,
-                OwnerId = modelPlace.IdOwner.ToString()
+                OwnerId = modelPlace.OwnerId.ToString()
             };
 
             return clientNote;
