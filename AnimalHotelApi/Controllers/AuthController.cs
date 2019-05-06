@@ -2,12 +2,7 @@
 using Models.User;
 using Models.User.Repository;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-
 
 namespace AnimalHotelApi.Controllers
 {
@@ -18,25 +13,20 @@ namespace AnimalHotelApi.Controllers
 
         public AuthController(IUserRepository repository, IAuthenticator authenticator)
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-
-            this.repository = repository;
-            this.authenticator = authenticator;
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.authenticator = authenticator ?? throw new ArgumentNullException(nameof(authenticator));
         }
 
         public IHttpActionResult Registration([FromBody] UserRegistrationInfo userRegistrationInfo)
         {
-            var userInfo = this.repository.Create(new UserCreateInfo(userRegistrationInfo.Login, userRegistrationInfo.Password, "user"));
-            return this.Ok();
+            var userInfo = repository.Create(new UserCreateInfo(userRegistrationInfo.Login, userRegistrationInfo.Password, "user"));
+            return Ok();
         }
 
         public IHttpActionResult Enter([FromBody] UserRegistrationInfo userRegistrationInfo)
         {
-            var user = this.authenticator.Authenticate(userRegistrationInfo.Login, userRegistrationInfo.Password);
-            return this.Ok();
+            var user = authenticator.Authenticate(userRegistrationInfo.Login, userRegistrationInfo.Password);
+            return Ok();
         }
     }
 }

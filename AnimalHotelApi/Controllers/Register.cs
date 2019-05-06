@@ -1,12 +1,7 @@
 ﻿using AnimalHotelApi.Models;
 using Models.User;
 using Models.User.Repository;
-using Swashbuckle.Swagger.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace AnimalHotelApi.Controllers
@@ -24,17 +19,17 @@ namespace AnimalHotelApi.Controllers
         {
             if (userRegisterInfo == null)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
             var uci = new UserCreateInfo(userRegisterInfo.Username, userRegisterInfo.Password, "user");
             try
             {
                 var user = userRepository.Create(uci);
-                return this.Ok(user);
+                return Ok(user);
             }
             catch (Exception)
             {
-                return this.Conflict();
+                return Conflict();
             }
         }
     }

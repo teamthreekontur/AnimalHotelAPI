@@ -6,13 +6,8 @@
     {
         public SessionState(string sessionId, Guid userId)
         {
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
-
-            this.SessionId = sessionId;
-            this.UserId = userId;
+            SessionId = sessionId ?? throw new ArgumentNullException(nameof(sessionId));
+            UserId = userId;
         }
 
         public string SessionId { get; }

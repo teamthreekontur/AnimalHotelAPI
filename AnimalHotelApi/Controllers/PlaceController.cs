@@ -18,7 +18,7 @@ namespace Place.API.Controllers
         public PlaceController(IPlaceRepository repository, IAuthenticator authenticator)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.authenticator = authenticator;
+            this.authenticator = authenticator ?? throw new ArgumentNullException(nameof(authenticator));
         }
 
         [HttpPost]
@@ -27,15 +27,15 @@ namespace Place.API.Controllers
         {
             if (buildInfo == null)
             {
-                var error = ServiceErrorResponses.BodyIsMissing("PlaceBuildInfo");
-                return this.BadRequest(error);
+                //var error = ServiceErrorResponses.BodyIsMissing("PlaceBuildInfo");
+                return BadRequest();
             }
 
             //var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
             //this.HttpContext.User
 
             var userId = Guid.Empty.ToString();
-         
+
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
             var modelPlaceInfo = repository.Create(creationInfo);
             var clientPlaceInfo = PlaceInfoConverter.Convert(modelPlaceInfo);
@@ -45,7 +45,7 @@ namespace Place.API.Controllers
                 { "placeId", clientPlaceInfo.Id }
             };
 
-            return this.CreatedAtRoute("GetPlaceRoute", routeParams, clientPlaceInfo);
+            return CreatedAtRoute("GetPlaceRoute", routeParams, clientPlaceInfo);
         }
 
         [HttpGet]
@@ -64,7 +64,7 @@ namespace Place.API.Controllers
 
             try
             {
-                modelPlace = this.repository.Get(modelPlaceId);
+                modelPlace = repository.Get(modelPlaceId);
             }
             catch (Models.Place.PlaceNotFoundException)
             {
@@ -85,8 +85,8 @@ namespace Place.API.Controllers
         {
             if (patchInfo == null)
             {
-                var error = ServiceErrorResponses.BodyIsMissing("PlacePatchInfo");
-                return this.BadRequest(error);
+                //var error = ServiceErrorResponses.BodyIsMissing("PlacePatchInfo");
+                return BadRequest();
             }
 
             if (!Guid.TryParse(placeId, out var placeIdGuid))
@@ -103,7 +103,7 @@ namespace Place.API.Controllers
 
             try
             {
-                modelPlace = this.repository.Patch(placePathInfo);
+                modelPlace = repository.Patch(placePathInfo);
             }
             catch (Models.Place.PlaceNotFoundException)
             {

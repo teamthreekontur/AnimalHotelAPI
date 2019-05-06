@@ -14,7 +14,7 @@ namespace AnimalHotelApi.Controllers
 
         public IHttpActionResult Patch(string guid, [FromBody]string value)
         {
-            return this.BadRequest();
+            return BadRequest();
         }
     }
 }
