@@ -16,11 +16,11 @@ namespace Models.Place
         /// <param name="idOwner">Идентификатор владельца передержки</param>
         /// <param name="description">Описание передержки</param>
         /// <param name="price">Цена передержки</param>
-        public PlaceCreateInfo(string name, string address, string description, decimal price, string idOwner)
+        public PlaceCreateInfo(string name, string address, string description, decimal price, Guid idOwner)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Address = address ?? throw new ArgumentNullException(nameof(address));
-            IdOwner = idOwner ?? throw new ArgumentNullException(nameof(idOwner));
+            IdOwner = idOwner;
             Description = description ?? throw new ArgumentNullException(nameof(description));
             Price = price;
         }
@@ -38,7 +38,7 @@ namespace Models.Place
         /// <summary>
         /// Идентификатор владельца передержки
         /// </summary>
-        public string IdOwner { get; }
+        public Guid IdOwner { get; }
 
         /// <summary>
         /// Описание передержки

@@ -33,7 +33,7 @@ namespace Place.API.Controllers
             //var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
             //this.HttpContext.User
 
-            var userId = Guid.Empty.ToString();
+            var userId = Guid.Empty;
 
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
             var modelPlaceInfo = repository.Create(creationInfo);
