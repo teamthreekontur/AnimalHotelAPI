@@ -5,6 +5,9 @@ using System;
 using Client.Models.Place;
 using System.Collections.Generic;
 using Models.Converters.Places;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Linq;
 
 namespace Place.API.Controllers
 {
@@ -29,10 +32,12 @@ namespace Place.API.Controllers
                 return BadRequest();
             }
 
-            //var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
-            //this.HttpContext.User
-
-            var userId = Guid.NewGuid();
+            string sessionId = "";
+            CookieHeaderValue cookie = Request.Headers.GetCookies("SessionId").FirstOrDefault();
+            if (cookie != null)
+            {
+                sessionId = cookie["SessionId"].Value;
+            }
 
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
             var modelPlaceInfo = repository.Create(creationInfo);
