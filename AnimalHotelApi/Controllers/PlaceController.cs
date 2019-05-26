@@ -26,14 +26,13 @@ namespace Place.API.Controllers
         {
             if (buildInfo == null)
             {
-                //var error = ServiceErrorResponses.BodyIsMissing("PlaceBuildInfo");
                 return BadRequest();
             }
 
             //var session = this.authenticator.GetSession(this.HttpContext.Request.Headers["session-id"]);
             //this.HttpContext.User
 
-            var userId = Guid.Empty;
+            var userId = Guid.NewGuid();
 
             var creationInfo = PlaceBuildInfoConverter.Convert(userId, buildInfo);
             var modelPlaceInfo = repository.Create(creationInfo);
@@ -73,7 +72,7 @@ namespace Place.API.Controllers
                 }
             }
 
-            var clientPlace = Models.Converters.Places.PlaceConverter.Convert(modelPlace);
+            var clientPlace = PlaceConverter.Convert(modelPlace);
 
             return Ok(clientPlace);
         }
@@ -84,7 +83,6 @@ namespace Place.API.Controllers
         {
             if (patchInfo == null)
             {
-                //var error = ServiceErrorResponses.BodyIsMissing("PlacePatchInfo");
                 return BadRequest();
             }
 
