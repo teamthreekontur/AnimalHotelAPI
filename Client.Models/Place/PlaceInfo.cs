@@ -18,16 +18,6 @@ namespace Client.Models.Place
         public string OwnerId { get; set; }
 
         /// <summary>
-        /// Дата создания передержки
-        /// </summary>
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// Дата последнего изменения
-        /// </summary>
-        public DateTime LastUpdatedAt { get; set; }
-
-        /// <summary>
         /// Название передержки
         /// </summary>
         public string Name { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Models.Place.Repository
 {
@@ -26,7 +27,7 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="placeFilter">Фильтры</param>
         /// <returns>Список передержек</returns>
-        Place[] Get(PlaceFilterInfo placeFilter);
+        List<Place> Get(PlaceFilterInfo placeFilter);
 
         /// <summary>
         /// Изменить информацию о передержке

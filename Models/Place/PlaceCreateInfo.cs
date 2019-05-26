@@ -20,9 +20,9 @@ namespace Models.Place
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Address = address ?? throw new ArgumentNullException(nameof(address));
-            IdOwner = idOwner;
             Description = description ?? throw new ArgumentNullException(nameof(description));
             Price = price;
+            IdOwner = idOwner;
         }
 
         /// <summary>

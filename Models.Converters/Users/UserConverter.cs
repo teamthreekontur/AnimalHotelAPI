@@ -29,5 +29,18 @@
 
             return clientUser;
         }
+
+        public static Model.UserCreateInfo Convert(Client.UserRegistrationInfo userRegistrationInfo)
+        {
+            if (userRegistrationInfo == null)
+            {
+                throw new ArgumentNullException(nameof(userRegistrationInfo));
+            }
+
+            return new Model.UserCreateInfo(
+                userRegistrationInfo.Login,
+                userRegistrationInfo.Password,
+                "user");
+        }
     }
 }

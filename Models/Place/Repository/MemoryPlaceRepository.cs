@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Models.Place.Repository
 {
@@ -27,17 +28,16 @@ namespace Models.Place.Repository
                 throw new ArgumentNullException(nameof(createInfo));
             }
 
-            var id = Guid.NewGuid();
-
             var place = new Place
             {
-                Id = id,
+                Id = Guid.NewGuid(),
                 Name = createInfo.Name,
                 Address = createInfo.Address,
-                IdOwner = createInfo.IdOwner
+                Description = createInfo.Description,
+                OwnerId = createInfo.IdOwner
             };
 
-            primaryKeyIndex.Add(id, place);
+            primaryKeyIndex.Add(place.Id, place);
 
             return place;
         }
@@ -75,9 +75,9 @@ namespace Models.Place.Repository
         /// </summary>
         /// <param name="placeFilter">Поля по которым нужно искать передержки</param>
         /// <returns>Список передержек</returns>
-        public Place[] Get(PlaceFilterInfo placeFilter)
+        public List<Place> Get(PlaceFilterInfo placeFilter)
         {
-            throw new NotImplementedException();
+            return primaryKeyIndex.Values.ToList();
         }
 
         /// <summary>

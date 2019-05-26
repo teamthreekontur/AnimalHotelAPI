@@ -1,8 +1,10 @@
-﻿using Models.User.Repository;
+﻿using Client.Models.User;
+using Models.User.Repository;
 using System.Web.Http;
 
 namespace AnimalHotelApi.Controllers
 {
+    [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
         private readonly IUserRepository userRepository;
@@ -12,7 +14,9 @@ namespace AnimalHotelApi.Controllers
             this.userRepository = userRepository;
         }
 
-        public IHttpActionResult Patch(string guid, [FromBody]string value)
+        [HttpPatch]
+        [Route("{id}")]
+        public IHttpActionResult Patch(string id, [FromBody]UserPatchInfo value)
         {
             return BadRequest();
         }

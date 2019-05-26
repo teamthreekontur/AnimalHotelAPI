@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Client.Models.Place
 {
@@ -23,13 +24,13 @@ namespace Client.Models.Place
         /// <summary>
         /// Описание передержки
         /// </summary>
-        [DataMember(IsRequired = true)]
+        [DataMember(IsRequired = false)]
         public string Description { get; set; }
 
         /// <summary>
         /// Цена передержки
         /// </summary>
-        [DataMember(IsRequired = true)]
+        [DataMember(IsRequired = false)]
         public decimal Price { get; set; }
     }
 }

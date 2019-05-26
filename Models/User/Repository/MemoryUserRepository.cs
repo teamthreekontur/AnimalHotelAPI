@@ -43,7 +43,7 @@ namespace Models.User.Repository
             {
                 Id = id,
                 Login = createInfo.Login,
-                Password = createInfo.Passwod,
+                PasswordHash = Helper.Hash(createInfo.Password),
                 Role = createInfo.Role
             };
 
@@ -112,7 +112,7 @@ namespace Models.User.Repository
 
             if (patchInfo.Password != null)
             {
-                user.Password = patchInfo.Password;
+                user.PasswordHash = Helper.Hash(patchInfo.Password);
             }
 
             if (patchInfo.Role != null)
