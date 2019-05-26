@@ -21,7 +21,7 @@ namespace Place.API.Controllers
         public PlacesController(IPlaceRepository repository, IAuthentificator authenticator)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.authenticator = authenticator;
+            this.authenticator = authenticator ?? throw new ArgumentNullException(nameof(authenticator));
         }
 
         [HttpPost]
@@ -59,7 +59,7 @@ namespace Place.API.Controllers
         [HttpGet]
         public IHttpActionResult GetPlaces([FromUri]PlaceFilterInfo placeFilterInfo)
         {
-            return this.Ok(new
+            return Ok(new
             {
                 Places = repository.Get(PlaceFilterInfoConverter.Convert(placeFilterInfo))
             });
@@ -72,7 +72,7 @@ namespace Place.API.Controllers
 
             if (!ModelState.IsValid)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
             if (!Guid.TryParse(placeId, out var modelPlaceId))
@@ -84,14 +84,14 @@ namespace Place.API.Controllers
 
             try
             {
-                modelPlace = this.repository.Get(modelPlaceId);
+                modelPlace = repository.Get(modelPlaceId);
             }
             catch (Models.Place.PlaceNotFoundException)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            return this.Ok(PlaceConverter.Convert(modelPlace));
+            return Ok(PlaceConverter.Convert(modelPlace));
         }
 
         [HttpPatch]
@@ -100,12 +100,12 @@ namespace Place.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
             string sessionId = "";
@@ -117,20 +117,20 @@ namespace Place.API.Controllers
 
             if (!authenticator.TryGetSession(sessionId, out var sessionState))
             {
-                return this.Unauthorized();
+                return Unauthorized();
             }
 
             try
             {
-                var place = this.repository.Get(placeIdGuid);
+                var place = repository.Get(placeIdGuid);
                 if (sessionState.UserId != place.OwnerId)
                 {
-                    return this.Unauthorized();
+                    return Unauthorized();
                 }
             }
             catch (Exception)
             {
-                return this.Unauthorized();
+                return Unauthorized();
             }
 
             var placePatchInfo = PlacePatchInfoConverter.Convert(placeIdGuid, patchInfo);
@@ -138,11 +138,11 @@ namespace Place.API.Controllers
 
             try
             {
-                modelPlace = this.repository.Patch(placePatchInfo);
+                modelPlace = repository.Patch(placePatchInfo);
             }
             catch (Models.Place.PlaceNotFoundException)
             {
-                this.NotFound();
+                return NotFound();
             }
 
             return Ok(PlaceConverter.Convert(modelPlace));
@@ -154,12 +154,12 @@ namespace Place.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return this.BadRequest();
+                return BadRequest();
             }
 
             if (!Guid.TryParse(placeId, out var placeIdGuid))
             {
-                return this.BadRequest();
+                return BadRequest();
             }
             try
             {
@@ -167,7 +167,7 @@ namespace Place.API.Controllers
             }
             catch (Models.Place.PlaceNotFoundException)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
             return Ok();

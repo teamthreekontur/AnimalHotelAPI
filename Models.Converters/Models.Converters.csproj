@@ -49,6 +49,7 @@
     <Compile Include="Places\PlaceInfoConverter.cs" />
     <Compile Include="Places\PlacePatchInfoConverter.cs" />
     <Compile Include="Users\UserConverter.cs" />
+    <Compile Include="Users\UserPatchInfoConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client.Models\Client.Models.csproj">
